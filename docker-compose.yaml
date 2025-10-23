@@ -3,8 +3,6 @@ version: "2.1"
 # Setup default properties we want on all/most containers
 x-default-container: &default-container
   user: "1000:1000"
-  group_add:
-    - "109"
   environment:
     - PUID=1000
     - PGID=100
@@ -25,6 +23,8 @@ services:
     <<: *default-container
     container_name: jellyfin
     image: jellyfin/jellyfin
+    group_add:
+      - "109"
     environment:
       - JELLYFIN_CACHE_DIR=/var/cache/jellyfin
       - JELLYFIN_CONFIG_DIR=/etc/jellyfin
