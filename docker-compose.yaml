@@ -41,37 +41,6 @@ services:
     devices:
       - /dev/dri/renderD128:/dev/dri/renderD128
 
-  firefox:
-    <<: *default-container
-    image: lscr.io/linuxserver/firefox:latest
-    container_name: firefox
-    security_opt:
-      - seccomp:unconfined
-    environment:
-      - DRINODE=/dev/dri/renderD128
-      - DISABLE_IPV6=true
-      - DOCKER_MODS=linuxserver/mods:firefox-fonts
-    volumes:
-      - ./configs/firefox:/config
-    ports:
-      - 3001:3001
-    networks:
-      - firefox
-    shm_size: "1gb"
-    devices:
-      - /dev/dri/renderD128:/dev/dri/renderD128
-
-  duplicati:
-    image: lscr.io/linuxserver/duplicati:latest
-    container_name: duplicati
-    volumes:
-      - ./configs/duplicati/config:/config
-      - ./configs:/source
-      - ./docker-compose.yml:/source/docker-compose.yml
-      - ./configs/duplicati/restore:/restore
-    networks:
-      - duplicati
-
   bazarr:
     <<: *mediarr-container
     image: lscr.io/linuxserver/bazarr:latest
@@ -177,10 +146,6 @@ services:
       - 8989:8989
 
 networks:
-  firefox:
-    driver: bridge
-  duplicati:
-    driver: bridge
   mediarr:
     driver: bridge
 
