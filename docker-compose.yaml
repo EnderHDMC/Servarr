@@ -118,19 +118,6 @@ services:
       - qbittorrent
       - jellyfin
 
-  readarr:
-    <<: *mediarr-container
-    image: lscr.io/linuxserver/readarr:develop
-    container_name: readarr
-    hostname: readarr
-    volumes:
-      - ./mediarr/readarr:/config
-    ports:
-      - 8787:8787
-    depends_on:
-      - prowlarr
-      - qbittorrent
-
   sonarr:
     <<: *mediarr-container
     image: lscr.io/linuxserver/sonarr:latest
