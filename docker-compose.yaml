@@ -133,6 +133,7 @@ services:
     image: caddy:latest
     container_name: caddy
     hostname: caddy
+    env_file: .env.caddy.local
     ports:
       - 80:80
       - 443:443
@@ -154,6 +155,10 @@ services:
 networks:
   mediarr:
     driver: bridge
+
+  caddy:
+    name: $CADDY_NETWORK
+    external: true
 
 volumes:
   caddy_data:
