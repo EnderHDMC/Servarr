@@ -135,6 +135,46 @@ services:
     ports:
       - 8989:8989
 
+  homepage:
+    <<: *mediarr-container
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage
+    hostname: homepage
+    environment:
+      - HOMEPAGE_ALLOWED_HOSTS=*
+      - DOCKER_DISCOVERY=true
+      - DOCKER_NETWORK=mediarr
+    volumes:
+      - ./configs/homepage:/app/config
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    ports:
+      - 3000:3000
+    restart: unless-stopped
+
+  caddy:
+    <<: *default-container
+    image: caddy:latest
+    container_name: caddy
+    hostname: caddy
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./configs/caddy/Caddyfile:/etc/caddy/Caddyfile
+      - ./configs/caddy/data:/data
+      - ./configs/caddy/config:/config
+    networks:
+      - mediarr
+    depends_on:
+      - homepage
+      - jellyfin
+      - sonarr
+      - radarr
+      - prowlarr
+      - bazarr
+      - qbittorrent
+      - jellyseerr
+
 networks:
   mediarr:
     driver: bridge
