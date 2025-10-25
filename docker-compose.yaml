@@ -142,6 +142,7 @@ services:
       - 443:443
     volumes:
       - ./configs/caddy/Caddyfile:/etc/caddy/Caddyfile
+      - ./public:/srv/caddy
       - caddy_data:/data
       - caddy_config:/config
     networks:

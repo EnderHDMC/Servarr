@@ -4,7 +4,8 @@
 }
 
 {$DOMAIN} {
-    respond "Caddy is working!"
+	root * /srv/caddy
+	file_server
 }
 
 # Homepage service
