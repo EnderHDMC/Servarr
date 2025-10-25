@@ -1,0 +1,38 @@
+{
+    email {$EMAIL_ADDRESS}
+    # debug
+}
+
+{$DOMAIN} {
+    respond "Caddy is working!"
+}
+
+# Homepage service
+homepage.{$DOMAIN} {
+    reverse_proxy homepage:3000
+}
+
+# Media services
+sonarr.{$DOMAIN} {
+    reverse_proxy sonarr:8989
+}
+
+radarr.{$DOMAIN} {
+    reverse_proxy radarr:7878
+}
+
+bazarr.{$DOMAIN} {
+    reverse_proxy bazarr:6767
+}
+
+prowlarr.{$DOMAIN} {
+    reverse_proxy prowlarr:9696
+}
+
+qbittorrent.{$DOMAIN} {
+    reverse_proxy qbittorrent:8080
+}
+
+jellyseerr.{$DOMAIN} {
+    reverse_proxy jellyseerr:5055
+}
