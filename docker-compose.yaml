@@ -1,8 +1,5 @@
-version: "2.1"
-
 # Setup default properties we want on all/most containers
 x-default-container: &default-container
-  user: "1000:1000"
   environment:
     - PUID=1000
     - PGID=100
@@ -14,17 +11,12 @@ x-mediarr-container: &mediarr-container
   <<: *default-container
   networks:
     - mediarr
-  volumes:
-    - myMedia:/mnt/media
-    - myDlFolders:/mnt/downloads
 
 services:
   jellyfin:
     <<: *default-container
     container_name: jellyfin
     image: jellyfin/jellyfin
-    group_add:
-      - "109"
     environment:
       - JELLYFIN_CACHE_DIR=/var/cache/jellyfin
       - JELLYFIN_CONFIG_DIR=/etc/jellyfin
@@ -36,10 +28,9 @@ services:
       - ./configs/jellyfin/var-lib:/var/lib/jellyfin
       - ./configs/jellyfin/var-log:/var/log/jellyfin
       - ./configs/jellyfin/timezone:/etc/timezone
-      - myMedia:/mnt/media
+      - /b/Servarr/Media:/mnt/media
+      - /b/Servarr/Downloads:/mnt/downloads
     network_mode: "host"
-    devices:
-      - /dev/dri/renderD128:/dev/dri/renderD128
 
   bazarr:
     <<: *mediarr-container
@@ -48,6 +39,8 @@ services:
     hostname: bazarr
     volumes:
       - ./configs/mediarr/bazarr:/config
+      - /b/Servarr/Media:/mnt/media
+      - /b/Servarr/Downloads:/mnt/downloads
     ports:
       - 6767:6767
     depends_on:
@@ -63,6 +56,8 @@ services:
       - 5055:5055
     volumes:
       - ./configs/mediarr/jellyseerr:/app/config
+      - /b/Servarr/Media:/mnt/media
+      - /b/Servarr/Downloads:/mnt/downloads
     depends_on:
       - sonarr
       - radarr
@@ -74,6 +69,8 @@ services:
     hostname: prowlarr
     volumes:
       - ./configs/mediarr/prowlarr:/config
+      - /b/Servarr/Media:/mnt/media
+      - /b/Servarr/Downloads:/mnt/downloads
     ports:
       - 9696:9696
     depends_on:
@@ -99,6 +96,8 @@ services:
       - WEBUI_PORT=8080
     volumes:
       - ./configs/mediarr/qbittorrent:/config
+      - /b/Servarr/Media:/mnt/media
+      - /b/Servarr/Downloads:/mnt/downloads
     ports:
       - 8080:8080
       - 6881:6881
@@ -111,6 +110,8 @@ services:
     hostname: radarr
     volumes:
       - ./configs/mediarr/radarr:/config
+      - /b/Servarr/Media:/mnt/media
+      - /b/Servarr/Downloads:/mnt/downloads
     ports:
       - 7878:7878
     depends_on:
@@ -125,6 +126,8 @@ services:
     hostname: sonarr
     volumes:
       - ./configs/mediarr/sonarr:/config
+      - /b/Servarr/Media:/mnt/media
+      - /b/Servarr/Downloads:/mnt/downloads
     depends_on:
       - prowlarr
       - qbittorrent
@@ -135,17 +138,3 @@ services:
 networks:
   mediarr:
     driver: bridge
-
-volumes:
-  myMedia:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /mnt/media
-  myDlFolders:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /mnt/HDD/downloads
