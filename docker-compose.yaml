@@ -158,10 +158,6 @@ networks:
   mediarr:
     driver: bridge
 
-  caddy:
-    name: $CADDY_NETWORK
-    external: true
-
 volumes:
   caddy_data:
   caddy_config:
