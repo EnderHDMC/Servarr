@@ -134,6 +134,7 @@ services:
     <<: *default-container
     image: caddy:latest
     container_name: caddy
+    # network_mode: host
     hostname: caddy
     env_file: .env.caddy.local
     ports:
