@@ -66,6 +66,8 @@ services:
       - LOG_LEVEL=${LOG_LEVEL:-info}
       - LOG_HTML=${LOG_HTML:-false}
       - CAPTCHA_SOLVER=${CAPTCHA_SOLVER:-none}
+    volumes:
+      - flare_config:/config
 
   qbittorrent:
     <<: *mediarr-container
@@ -163,3 +165,4 @@ networks:
 volumes:
   caddy_data:
   caddy_config:
+  flare_config:
