@@ -96,6 +96,9 @@ services:
     image: fallenbagel/jellyseerr:latest
     container_name: jellyseerr
     hostname: jellyseerr
+    networks:
+      - jelly
+      - mediarr
     volumes:
       - ./configs/mediarr/jellyseerr:/app/config
       - /b/Servarr/Media:/mnt/media
@@ -136,6 +139,9 @@ services:
     image: ghcr.io/gethomepage/homepage:latest
     container_name: homepage
     hostname: homepage
+    networks:
+      - mediarr
+      - jelly
     environment:
       - HOMEPAGE_ALLOWED_HOSTS=*
       - DOCKER_DISCOVERY=true
