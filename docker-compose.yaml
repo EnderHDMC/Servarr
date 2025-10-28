@@ -148,6 +148,7 @@ services:
       - DOCKER_NETWORK=mediarr
     volumes:
       - ./configs/homepage:/app/config
+      - ./public/homepage:/app/public/images
       - /var/run/docker.sock:/var/run/docker.sock:ro
 
   caddy:
@@ -162,7 +163,7 @@ services:
       - 443:443
     volumes:
       - ./configs/caddy/Caddyfile:/etc/caddy/Caddyfile
-      - ./public:/srv/caddy
+      - ./public/caddy:/srv/caddy
       - caddy_data:/data
       - caddy_config:/config
     networks:
