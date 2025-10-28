@@ -22,8 +22,6 @@ services:
       - ./configs/mediarr/bazarr:/config
       - /b/Servarr/Media:/mnt/media
       - /b/Servarr/Downloads:/mnt/downloads
-    ports:
-      - 6767:6767
     depends_on:
       - sonarr
       - radarr
@@ -52,8 +50,6 @@ services:
       - ./configs/mediarr/prowlarr:/config
       - /b/Servarr/Media:/mnt/media
       - /b/Servarr/Downloads:/mnt/downloads
-    ports:
-      - 9696:9696
     depends_on:
       - flaresolverr
 
@@ -81,7 +77,6 @@ services:
       - /b/Servarr/Media:/mnt/media
       - /b/Servarr/Downloads:/mnt/downloads
     ports:
-      - 8080:8080
       - 6881:6881
       - 6881:6881/udp
 
@@ -94,8 +89,6 @@ services:
       - ./configs/mediarr/radarr:/config
       - /b/Servarr/Media:/mnt/media
       - /b/Servarr/Downloads:/mnt/downloads
-    ports:
-      - 7878:7878
     depends_on:
       - prowlarr
       - qbittorrent
@@ -109,8 +102,6 @@ services:
       - ./configs/mediarr/sonarr:/config
       - /b/Servarr/Media:/mnt/media
       - /b/Servarr/Downloads:/mnt/downloads
-    ports:
-      - 8989:8989
     depends_on:
       - prowlarr
       - qbittorrent
@@ -127,8 +118,6 @@ services:
     volumes:
       - ./configs/homepage:/app/config
       - /var/run/docker.sock:/var/run/docker.sock:ro
-    ports:
-      - 3000:3000
 
   caddy:
     <<: *default-container
