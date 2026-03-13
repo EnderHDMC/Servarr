@@ -1,0 +1,43 @@
+{
+	email {$EMAIL_ADDRESS}
+	# debug
+}
+
+{$DOMAIN} {
+	root * public
+	file_server
+}
+
+# Homepage service
+homepage.{$DOMAIN} {
+	reverse_proxy localhost:3000
+}
+
+jellyfin.{$DOMAIN} {
+	reverse_proxy localhost:8096
+}
+
+# Media services
+sonarr.{$DOMAIN} {
+	reverse_proxy localhost:8989
+}
+
+radarr.{$DOMAIN} {
+	reverse_proxy localhost:7878
+}
+
+bazarr.{$DOMAIN} {
+	reverse_proxy localhost:6767
+}
+
+prowlarr.{$DOMAIN} {
+	reverse_proxy localhost:9696
+}
+
+qbittorrent.{$DOMAIN} {
+	reverse_proxy localhost:8080
+}
+
+jellyseerr.{$DOMAIN} {
+	reverse_proxy localhost:5055
+}
