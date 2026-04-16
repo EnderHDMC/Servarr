@@ -102,9 +102,12 @@ services:
 
   jellyseerr:
     <<: *mediarr-container
-    image: fallenbagel/jellyseerr:latest
+    image: ghcr.io/seerr-team/seerr:latest
+    init: true
     container_name: jellyseerr
     hostname: jellyseerr
+    environment:
+      - PORT=5055
     ports:
       - 5055:5055
     networks:
