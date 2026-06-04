@@ -2,7 +2,7 @@
 x-default-container: &default-container
   environment:
     - PUID=1000
-    - PGID=100
+    - PGID=10
     - TZ=Africa/Harare
   restart: unless-stopped
 
@@ -22,8 +22,8 @@ services:
       - 6767:6767
     volumes:
       - ./configs/mediarr/bazarr:/config
-      - /b/Servarr/Media:/mnt/media
-      - /b/Servarr/Downloads:/mnt/downloads
+      - ./media:/mnt/media
+      - ./downloads:/mnt/downloads
     depends_on:
       - sonarr
       - radarr
@@ -37,8 +37,8 @@ services:
       - 9696:9696
     volumes:
       - ./configs/mediarr/prowlarr:/config
-      - /b/Servarr/Media:/mnt/media
-      - /b/Servarr/Downloads:/mnt/downloads
+      - ./media:/mnt/media
+      - ./downloads:/mnt/downloads
     depends_on:
       - flaresolverr
 
@@ -63,8 +63,8 @@ services:
       - WEBUI_PORT=8080
     volumes:
       - ./configs/mediarr/qbittorrent:/config
-      - /b/Servarr/Media:/mnt/media
-      - /b/Servarr/Downloads:/mnt/downloads
+      - ./media:/mnt/media
+      - ./downloads:/mnt/downloads
     ports:
       - 8080:8080
       - 6881:6881
@@ -79,8 +79,8 @@ services:
       - 7878:7878
     volumes:
       - ./configs/mediarr/radarr:/config
-      - /b/Servarr/Media:/mnt/media
-      - /b/Servarr/Downloads:/mnt/downloads
+      - ./media:/mnt/media
+      - ./downloads:/mnt/downloads
     depends_on:
       - prowlarr
       - qbittorrent
@@ -94,8 +94,8 @@ services:
       - 8989:8989
     volumes:
       - ./configs/mediarr/sonarr:/config
-      - /b/Servarr/Media:/mnt/media
-      - /b/Servarr/Downloads:/mnt/downloads
+      - ./media:/mnt/media
+      - ./downloads:/mnt/downloads
     depends_on:
       - prowlarr
       - qbittorrent
@@ -115,8 +115,8 @@ services:
       - mediarr
     volumes:
       - ./configs/mediarr/jellyseerr:/app/config
-      - /b/Servarr/Media:/mnt/media
-      - /b/Servarr/Downloads:/mnt/downloads
+      - ./media:/mnt/media
+      - ./downloads:/mnt/downloads
     depends_on:
       - sonarr
       - radarr
@@ -141,14 +141,8 @@ services:
       - ./configs/jellyfin/var-lib:/var/lib/jellyfin
       - ./configs/jellyfin/var-log:/var/log/jellyfin
       - ./configs/jellyfin/timezone:/etc/timezone
-      - /b/Servarr/Media:/mnt/media
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: 1
-              capabilities: [ gpu ]
+      - ./media:/mnt/media
+    # TODO: Add GPU support
 
   homepage:
     <<: *mediarr-container
