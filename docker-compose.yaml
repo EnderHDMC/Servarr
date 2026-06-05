@@ -18,8 +18,6 @@ services:
     image: lscr.io/linuxserver/bazarr:latest
     container_name: bazarr
     hostname: bazarr
-    ports:
-      - 6767:6767
     volumes:
       - ./configs/mediarr/bazarr:/config
       - ./media:/mnt/media
@@ -33,8 +31,6 @@ services:
     image: linuxserver/prowlarr:latest
     container_name: prowlarr
     hostname: prowlarr
-    ports:
-      - 9696:9696
     volumes:
       - ./configs/mediarr/prowlarr:/config
       - ./media:/mnt/media
@@ -65,18 +61,12 @@ services:
       - ./configs/mediarr/qbittorrent:/config
       - ./media:/mnt/media
       - ./downloads:/mnt/downloads
-    ports:
-      - 8080:8080
-      - 6881:6881
-      - 6881:6881/udp
 
   radarr:
     <<: *mediarr-container
     image: lscr.io/linuxserver/radarr:latest
     container_name: radarr
     hostname: radarr
-    ports:
-      - 7878:7878
     volumes:
       - ./configs/mediarr/radarr:/config
       - ./media:/mnt/media
@@ -90,8 +80,6 @@ services:
     image: lscr.io/linuxserver/sonarr:latest
     container_name: sonarr
     hostname: sonarr
-    ports:
-      - 8989:8989
     volumes:
       - ./configs/mediarr/sonarr:/config
       - ./media:/mnt/media
@@ -108,8 +96,6 @@ services:
     hostname: jellyseerr
     environment:
       - PORT=5055
-    ports:
-      - 5055:5055
     networks:
       - jelly
       - mediarr
@@ -126,8 +112,6 @@ services:
     container_name: jellyfin
     image: jellyfin/jellyfin
     hostname: jellyfin
-    ports:
-      - 8096:8096
     networks:
       - jelly
     environment:
@@ -149,8 +133,6 @@ services:
     image: ghcr.io/gethomepage/homepage:latest
     container_name: homepage
     hostname: homepage
-    ports:
-      - 3000:3000
     networks:
       - mediarr
       - jelly
@@ -171,8 +153,8 @@ services:
     hostname: caddy
     env_file: .env.caddy.local
     ports:
-      - 80:80
-      - 443:443
+      - 4080:80
+      - 4443:443
     volumes:
       - ./configs/caddy/Caddyfile:/etc/caddy/Caddyfile
       - ./public/caddy:/srv/caddy
