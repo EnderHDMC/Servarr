@@ -2,7 +2,7 @@
 x-default-container: &default-container
   environment:
     - PUID=1000
-    - PGID=10
+    - PGID=1000
     - TZ=Africa/Harare
   restart: unless-stopped
 
@@ -57,6 +57,8 @@ services:
     hostname: qbittorrent
     environment:
       - WEBUI_PORT=8080
+      - PUID=1000
+      - PGID=1000
     volumes:
       - ./configs/mediarr/qbittorrent:/config
       - ./media:/mnt/media
