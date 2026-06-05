@@ -160,8 +160,6 @@ services:
       - ./public/caddy:/srv/caddy
       - caddy_data:/data
       - caddy_config:/config
-    profiles:
-      - donotstart
     networks:
       - mediarr
       - jelly
